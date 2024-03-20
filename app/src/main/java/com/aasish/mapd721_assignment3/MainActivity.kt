@@ -5,10 +5,19 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.animateColor
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -29,6 +38,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -74,6 +84,44 @@ fun MainScreen(onNavigate: (Int) -> Unit) {
         Spacer(modifier = Modifier.height(50.dp))
         Text("Aasish Mahato", fontSize = 20.sp, modifier = Modifier.padding(bottom = 16.dp))
         Text("301373719", fontSize = 20.sp, modifier = Modifier.padding(bottom = 16.dp))
+    }
+}
+
+@ExperimentalAnimationApi
+@Composable
+fun Screen1(onBackPressed: () -> Unit) {
+    val infiniteTransition = rememberInfiniteTransition(label = "")
+    val color by infiniteTransition.animateColor(
+        initialValue = Color.Red,
+        targetValue = Color.Blue,
+        animationSpec = infiniteRepeatable(
+            animation = tween(2000),
+            repeatMode = RepeatMode.Reverse
+        ), label = ""
+    )
+
+    Column(modifier = Modifier.fillMaxSize()) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Start
+        ) {
+            IconButton(onClick = onBackPressed) {
+                Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+            }
+        }
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(color)
+        ) {
+            Text(
+                text = "Color changes in each 2 second",
+                fontSize = 20.sp,
+                color = Color.White,
+                modifier = Modifier.align(Alignment.Center)
+            )
+        }
+
     }
 }
 
