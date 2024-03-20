@@ -63,7 +63,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Assignment3Theme {
+            MAPD721_Assignment3Theme {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
                     MyApp()
@@ -95,7 +95,7 @@ fun MainScreen(onNavigate: (Int) -> Unit) {
         Button(onClick = { onNavigate(4) }) {
             Text("Go to Screen 4")
         }
-        Spacer(modifier = Modifier.height(50.dp))
+        Spacer(modifier = Modifier.height(60.dp))
         Text("Aasish Mahato", fontSize = 20.sp, modifier = Modifier.padding(bottom = 16.dp))
         Text("301373719", fontSize = 20.sp, modifier = Modifier.padding(bottom = 16.dp))
     }
@@ -178,7 +178,7 @@ fun Screen3(onBackPressed: () -> Unit) {
     ) {
 
 
-        Greeting(name = "User's Name", modifier = Modifier.padding(16.dp))
+        Greeting(name = "Aasish Mahato", modifier = Modifier.padding(16.dp))
     }
 }
 
@@ -203,7 +203,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
         }
 
         AnimatedContent(targetState = score, label = "") { targetScore ->
-            Text(text = "Game Score: $score")
+            Text(text = "Game Score: $targetScore")
         }
 
         AnimatedContent(
