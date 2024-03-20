@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.RepeatMode
@@ -122,6 +123,31 @@ fun Screen1(onBackPressed: () -> Unit) {
             )
         }
 
+    }
+}
+
+@ExperimentalAnimationApi
+@Composable
+fun Screen2(onBackPressed: () -> Unit) {
+    var visible by remember { mutableStateOf(true) }
+
+    Column(modifier = Modifier.fillMaxSize()) {
+        IconButton(onClick = onBackPressed) {
+            Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+        }
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            AnimatedVisibility(visible = visible) {
+                Text("Value Based Animation", fontSize = 20.sp)
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            Button(onClick = { visible = !visible }) {
+                Text(if (visible) "Hide Text" else "Show Text")
+            }
+        }
     }
 }
 
