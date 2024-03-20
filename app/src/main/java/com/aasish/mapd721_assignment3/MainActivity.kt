@@ -4,13 +4,20 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.SizeTransform
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.with
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -151,6 +158,73 @@ fun Screen2(onBackPressed: () -> Unit) {
     }
 }
 
+
+@OptIn(ExperimentalAnimationApi::class)
+@Composable
+fun Screen3(onBackPressed: () -> Unit) {
+    var count by remember { mutableStateOf(0) }
+    var score by remember { mutableStateOf(0) }
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+
+        Greeting(name = "User's Name", modifier = Modifier.padding(16.dp))
+    }
+}
+
+@OptIn(ExperimentalAnimationApi::class)
+@Composable
+fun Greeting(name: String, modifier: Modifier = Modifier) {
+    Row {
+        var count by remember { mutableStateOf(0) }
+        var score by remember { mutableStateOf(0) }
+        Button(onClick = { count++; score += 100 }) {
+            Text("Add")
+        }
+
+        AnimatedContent(targetState = count, label = "") { targetCount ->
+            // Make sure to use `targetCount`, not `count`.
+            Text(text = "Count: $targetCount")
+        }
+
+        AnimatedContent(targetState = count, label = "") { targetCount ->
+            // Make sure to use `targetCount`, not `count`.
+            Text(text = "Count: $targetCount")
+        }
+
+        AnimatedContent(targetState = score, label = "") { targetScore ->
+            Text(text = "Game Score: $score")
+        }
+
+        AnimatedContent(
+            targetState = count,
+            transitionSpec = {
+                // Compare the incoming number with the previous number.
+                if (targetState > initialState) {
+                    // If the target number is larger, it slides up and fades in
+                    // while the initial (smaller) number slides up and fades out.
+                    slideInVertically { height -> height } + fadeIn() with
+                            slideOutVertically { height -> -height } + fadeOut()
+                } else {
+                    // If the target number is smaller, it slides down and fades in
+                    // while the initial number slides down and fades out.
+                    slideInVertically { height -> -height } + fadeIn() with
+                            slideOutVertically { height -> height } + fadeOut()
+                }.using(
+                    // Disable clipping since the faded slide-in/out should
+                    // be displayed out of bounds.
+                    SizeTransform(clip = false)
+                )
+            }, label = ""
+        ) { targetCount ->
+            Text(text = "$targetCount")
+        }
+    }
+}
 
 
 
