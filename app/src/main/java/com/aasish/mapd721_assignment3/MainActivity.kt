@@ -84,16 +84,16 @@ fun MainScreen(onNavigate: (Int) -> Unit) {
     ) {
         Text("Main Screen", fontSize = 20.sp, modifier = Modifier.padding(bottom = 16.dp))
         Button(onClick = { onNavigate(1) }) {
-            Text("Go to Screen 1")
+            Text("Animation 1 Demo")
         }
         Button(onClick = { onNavigate(2) }) {
-            Text("Go to Screen 2")
+            Text("Animation 2 Demo")
         }
         Button(onClick = { onNavigate(3) }) {
-            Text("Go to Screen 3")
+            Text("Animation 3 Demo")
         }
         Button(onClick = { onNavigate(4) }) {
-            Text("Go to Screen 4")
+            Text("Animation 4 Demo")
         }
         Spacer(modifier = Modifier.height(60.dp))
         Text("Aasish Mahato", fontSize = 20.sp, modifier = Modifier.padding(bottom = 16.dp))
